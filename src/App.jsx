@@ -142,8 +142,6 @@ function App() {
                 return <CardPokemon key={item.id} {...item} index={index} />
               })
             }
-
-
           </div>
         </div>
       </div>
