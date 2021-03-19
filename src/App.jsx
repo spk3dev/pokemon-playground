@@ -2,7 +2,10 @@ import React from "react";
 import BG_Graph from "./assets/bg_graph.png";
 
 function App() {
-  const [pokemons, setPokemon] = React.useState([
+  const [pokemons, setPokemon] = React.useState( 
+  JSON.parse(localStorage.getItem('pokemons'))?.length
+  ? JSON.parse(localStorage.getItem('pokemons'))  
+  : [
     {
       id: 1,
       name: "Pikachu",
@@ -74,37 +77,23 @@ function App() {
         expanded : true
       },
     ];
-    setPokemon(newPokemon);
+    localStorage.setItem('pokemons',JSON.stringify(newPokemon))
+    setPokemon(JSON.parse(localStorage.getItem('pokemons')));
   };
 
   const CardPokemon = ({ name, index , expanded }) => {
     return (
       
-      <div key={index} className="card" style={{ color: "rgb(187, 187, 187)" }}>
+      <div key={index} className="card m-2" style={{ color: "rgb(187, 187, 187)" }}>
         <div
           className="card-header"
           style={{ backgroundColor: "rgb(58, 58, 58)" }}
-          id="headingTwo"
         >
           <h5 className="mb-0">
-            <button
-              className="btn text-light"
-              data-toggle="collapse"
-              data-target={"#collapse" + index}
-              aria-expanded={expanded}
-              aria-controls={"collapse" + index}
-            >
               {name}
-            </button>
           </h5>
         </div>
-        {/* { JSON.stringify(props) } */}
-        <div
-          id={"collapse" + index}
-          className="collapse"
-          aria-labelledby="headingTwo"
-          data-parent="#accordion"
-        >
+  
           <div
             className="card-body"
             style={{ backgroundColor: "rgb(83, 83, 83)" }}
@@ -163,7 +152,6 @@ function App() {
               </div>
             </div>
           </div>
-        </div>
       </div>
     );
   };
@@ -184,7 +172,7 @@ function App() {
         <div className="left-col d-flex">
           <img src={BG_Graph} alt="bg_graph" />
           <img src={BG_Graph} alt="bg_graph" />
-          {pokemons.map(({ x, y, image, name }, index) => {
+          {pokemons.reverse().map(({ x, y, image, name }, index) => {
             return (
               <img
                 key={index}
@@ -197,14 +185,12 @@ function App() {
             );
           })}
         </div>
-        <div className="right-col">
+        <div className="right-col" style={{ overflow : "auto" }}>
           <div className="p-4">
-            <div id="accordion">
               {pokemons.map((item, index) => {
                 return <CardPokemon key={item.id} {...item} index={index} />;
               })}
             </div>
-          </div>
         </div>
       </div>
 
