@@ -37,7 +37,9 @@ function App() {
   const [pokemonImage, setPokemonImage] = React.useState("");
   const [pokemonName, setPokemonName] = React.useState("");
 
-  React.useEffect(() => {}, []);
+  React.useEffect(() => {
+
+  }, []);
 
   const getPosition = (x, y) => {
     return { position: "absolute", left: `${x}px`, top: `${y}px` };
@@ -67,7 +69,6 @@ function App() {
 
   const addPokemon = () => {
     let newPokemon = [
-      ...pokemons,
       {
         id: Math.random(),
         name: pokemonName,
@@ -76,6 +77,7 @@ function App() {
         y: 100,
         expanded : true
       },
+      ...pokemons,
     ];
     localStorage.setItem('pokemons',JSON.stringify(newPokemon))
     setPokemon(JSON.parse(localStorage.getItem('pokemons')));
@@ -172,7 +174,7 @@ function App() {
         <div className="left-col d-flex">
           <img src={BG_Graph} alt="bg_graph" />
           <img src={BG_Graph} alt="bg_graph" />
-          {pokemons.reverse().map(({ x, y, image, name }, index) => {
+          {pokemons.map(({ x, y, image, name }, index) => {
             return (
               <img
                 key={index}
