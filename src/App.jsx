@@ -83,7 +83,14 @@ function App() {
     setPokemon(JSON.parse(localStorage.getItem('pokemons')));
   };
 
-  const CardPokemon = ({ name, index , expanded }) => {
+  const removePokemon = (index) => {
+
+    pokemons.splice(index, 1)
+    localStorage.setItem('pokemons',JSON.stringify(pokemons))
+    setPokemon(JSON.parse(localStorage.getItem('pokemons')));
+  };
+
+  const CardPokemon = ({ name, index  }) => {
     return (
       
       <div key={index} className="card m-2" style={{ color: "rgb(187, 187, 187)" }}>
@@ -94,6 +101,11 @@ function App() {
           <h5 className="mb-0">
               {name}
           </h5>
+          <button className="btn btn-danger"  style={{ top : 2 , right : 4 , position : "absolute" }} 
+            onClick={() => removePokemon(index)}
+          >
+            X
+          </button>
         </div>
   
           <div
